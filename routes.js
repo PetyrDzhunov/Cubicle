@@ -11,7 +11,7 @@ router.use('/about', aboutController)
 // =>  we cant resolve it , so for any else endpoint,
 // => render 404.
 router.get('*', (req, res) => {
-    res.render('404', { layout: false });
+    res.render('404');
 });
 //iskam na vsichki zaqvki koito idvat na /product ,
 // da gi naznachish na nashiq product contoller
