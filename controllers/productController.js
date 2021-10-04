@@ -12,10 +12,8 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-    console.log('created');
     console.log(req.body); // tova koeto klienta e izpratil;
-
-    res.send('created');
+    res.redirect('/products');
 });
 
 router.get('/details/:productId', (req, res) => {
