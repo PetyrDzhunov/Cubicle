@@ -20,4 +20,5 @@ function createProduct(data) {
 
 module.exports = {
     create: createProduct,
+    getAll
 }
