@@ -18,7 +18,11 @@ router.get('/create', (req, res) => {
 
 router.post('/create', validateProduct, (req, res) => {
     //Validate inputs !!!
-    productService.create(req.body);
+    productService.create(req.body, (err) => {
+        if (err) {
+            return res.status(500).end();
+        };
+    });
     res.redirect('/products');
 });
 
