@@ -4,7 +4,13 @@
 
 
 // module.exports = {
+//     getAll() {
+//         return productsDb
+//     },
 
+//     getOne(id) {
+//         return productsDb.find((product) => product.id === id);
+//     },
 
 
 // };
