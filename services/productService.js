@@ -13,6 +13,8 @@ async function getAll(query) {
     if (query.to) {
         products = products.filter((product) => Number(product.level) <= query.to);
     };
+
+
     return products;
 };
 
@@ -26,6 +28,10 @@ function getOne(id) {
     // returns a promise
 };
 
+function getOneWithAccessories(id) {
+    return Cube.findById(id).populate('accessories').lean();
+};
+
 async function attachAccessory(productId, accessoryId) {
     let product = await Cube.findById(productId);
     let accessory = await Accessory.findById(accessoryId);
@@ -37,5 +43,6 @@ module.exports = {
     create: createProduct,
     getAll,
     getOne,
-    attachAccessory
+    attachAccessory,
+    getOneWithAccessories
 }
