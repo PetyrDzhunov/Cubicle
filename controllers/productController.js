@@ -1,6 +1,7 @@
 const { Router } = require('express');
 
 const productService = require('../services/productService');
+const accessoryService = require('../services/accessoryService');
 
 const { validateProduct } = require('../controllers/helpers/productHelpers');
 
@@ -38,6 +39,18 @@ router.get('/details/:productId', async(req, res) => {
     // .catch(err => res.render('404'));
 });
 
+router.get('/:productId/attach', async(req, res) => {
+    let product = await productService.getOne(req.params.productId);
+    let accessories = await accessoryService.getAll();
+    res.render('attachAccessory', { product, accessories });
+})
+
+router.post('/:productId/attach', (req, res) => {
+    productService.attachAccessory(req.params.productId, req.body.accessory)
+        .then(response => {
+            res.redirect(`/products/details/${req.params.productId}`)
+        })
+});
 
 
 module.exports = router;
