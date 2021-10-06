@@ -4,7 +4,6 @@ const productService = require('../services/productService');
 
 const { validateProduct } = require('../controllers/helpers/productHelpers');
 
-
 const router = Router();
 
 router.get('/', (req, res) => {
@@ -19,6 +18,7 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', validateProduct, (req, res) => {
+    console.log('create product query');
     productService.create(req.body)
         .then(() => res.redirect('/products'))
         .catch(() => res.status(500).end());
