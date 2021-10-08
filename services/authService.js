@@ -21,7 +21,7 @@ const login = async({ username, password }) => {
     let isIdentical = await bcrypt.compare(password, user.password);
     if (!isIdentical) throw { message: "Password does not match!" };
     // generate token
-    let token = jwt.sign({ _id: user._id }, SECRET);
+    let token = jwt.sign({ _id: user._id, roles: ['admin'] }, SECRET);
     return token;
 };
 

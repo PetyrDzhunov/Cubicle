@@ -9,19 +9,14 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', async(req, res) => {
-    //take form data
     const { username, password } = req.body;
     try {
         let token = await authService.login({ username, password });
         res.cookie(COOKIE_NAME, token);
         res.redirect('/products');
     } catch (error) {
-        console.log(error);
-        // res.render('login', { error });
         res.send(error);
     };
-    //validate
-    //login
 });
 
 router.get('/register', (req, res) => {

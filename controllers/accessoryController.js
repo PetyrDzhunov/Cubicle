@@ -2,12 +2,15 @@ const { Router } = require('express');
 const accessoryService = require('../services/accessoryService');
 const router = Router();
 
-router.get('/create', (req, res) => {
+const isAuthenticated = require('../middlewares/isAuthenticated');
+const isGuest = require('../middlewares/isGuest');
+
+router.get('/create', isAuthenticated, (req, res) => {
     res.render('createAccessory');
 });
 
 //TODO validation middleware or just validate incomming data
-router.post('/create', async(req, res) => {
+router.post('/create', isAuthenticated, async(req, res) => {
     try {
         let accessory = await accessoryService.create(req.body);
         res.redirect('/products');
