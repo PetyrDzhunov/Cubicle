@@ -25,7 +25,7 @@ router.get('/create', isAuthenticated, (req, res) => {
 });
 
 router.post('/create', isAuthenticated, validateProduct, (req, res) => {
-    productService.create(req.body)
+    productService.create(req.body, req.user._id)
         .then(() => res.redirect('/products'))
         .catch(() => res.status(500).end());
 });
@@ -42,14 +42,55 @@ router.get('/:productId/attach', isAuthenticated, async(req, res) => {
     let product = await productService.getOne(req.params.productId);
     let accessories = await accessoryService.getAllUnattached(product.accessories);
     res.render('attachAccessory', { product, accessories });
-})
+});
 
 router.post('/:productId/attach', isAuthenticated, (req, res) => {
     productService.attachAccessory(req.params.productId, req.body.accessory)
         .then(response => {
             res.redirect(`/products/details/${req.params.productId}`)
-        })
+        });
 });
+
+router.get('/:productId/edit', isAuthenticated, (req, res) => {
+    //go to DB take the cube and give it to the response!
+    productService.getOne(req.params.productId)
+        .then((product) => {
+            res.render('editCube', product);
+        });
+});
+
+router.post('/:productId/edit', isAuthenticated, validateProduct, (req, res) => {
+    productService.updateOne(req.params.productId, req.body)
+        .then((response) => {
+            res.redirect(`/products/details/${req.params.productId}`);
+        })
+        .catch(error => console.log(error));
+
+});
+
+router.get('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.getOne(req.params.productId)
+        .then((product) => {
+            if (req.user._id != product.creator) {
+                res.redirect('/products');
+            } else {
+                res.render('deleteCube', product);
+            }
+        });
+});
+
+router.post('/:productId/delete', isAuthenticated, (req, res) => {
+    productService.deleteOne(req.params.productId)
+        .then((response) => {
+            if (req.user._id != product.creator) {
+                res.redirect('/products');
+            } else {
+                res.render('deleteCube', product);
+            }
+            res.redirect('/products');
+        });
+});
+
 
 
 module.exports = router;

@@ -14,6 +14,7 @@ module.exports = function() {
                 } else {
                     // what we want when we get our token verified?
                     req.user = decoded;
+                    res.locals.isAuthenticated = true;
                 }
             });
 

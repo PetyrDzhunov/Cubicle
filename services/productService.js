@@ -18,8 +18,8 @@ async function getAll(query) {
     return products;
 };
 
-function createProduct(data) {
-    let cube = new Cube(data);
+function createProduct(data, userId) {
+    let cube = new Cube({...data, creator: userId });
     return cube.save();
 };
 
@@ -39,10 +39,20 @@ async function attachAccessory(productId, accessoryId) {
     return product.save();
 };
 
+function updateOne(productId, productData) {
+    return Cube.updateOne({ _id: productId }, productData);
+};
+
+function deleteOne(productId) {
+    return Cube.deleteOne({ _id: productId });
+};
+
 module.exports = {
     create: createProduct,
     getAll,
     getOne,
     attachAccessory,
-    getOneWithAccessories
+    getOneWithAccessories,
+    updateOne,
+    deleteOne
 }

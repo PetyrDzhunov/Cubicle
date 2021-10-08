@@ -9,7 +9,7 @@ const isGuest = require('./middlewares/isGuest');
 
 const router = Router();
 router.use('/', homeController);
-router.use('/auth', isGuest, authController);
+router.use('/auth', authController);
 //isGuest kazva na nivo controller => koi na kade moje da hodi.
 //vseki edin koito otiva v authControllera da e isGuest
 // toest lognat potrebitel nqma da moje da otida na auth routes;    
