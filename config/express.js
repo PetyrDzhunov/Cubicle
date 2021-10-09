@@ -3,7 +3,6 @@ const express = require('express');
 const auth = require('../middlewares/auth');
 const cookieParser = require('cookie-parser');
 
-
 function setupExpress(app) {
     app.engine('hbs', handlebars({ extname: 'hbs' }));
     app.set('view engine', 'hbs');

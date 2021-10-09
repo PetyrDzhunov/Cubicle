@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const validator = require('validator');
 
 const productService = require('../services/productService');
 const accessoryService = require('../services/accessoryService');
@@ -24,7 +25,7 @@ router.get('/create', isAuthenticated, (req, res) => {
     res.render('create', { title: 'Create cube' });
 });
 
-router.post('/create', isAuthenticated, validateProduct, (req, res) => {
+router.post('/create', isAuthenticated, (req, res) => {
     productService.create(req.body, req.user._id)
         .then(() => res.redirect('/products'))
         .catch(() => res.status(500).end());
@@ -87,7 +88,6 @@ router.post('/:productId/delete', isAuthenticated, (req, res) => {
             } else {
                 res.render('deleteCube', product);
             }
-            res.redirect('/products');
         });
 });
 
